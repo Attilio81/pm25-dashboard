@@ -60,8 +60,16 @@ const PM25Dashboard = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/Torino-Rebaudengo_Polveri-sottili_2023-11-08_2024-11-07.csv');
+        console.log('Inizia il caricamento dei dati');
+        // Ottieni il percorso base dal package.json homepage o usa '/'
+        const basePath = process.env.PUBLIC_URL || '';
+        const response = await fetch(`${basePath}/Torino-Rebaudengo_Polveri-sottili_2023-11-08_2024-11-07.csv`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log('File scaricato con successo');
         const text = await response.text();
+        console.log('Contenuto del file:', text.substring(0, 200) + '...');
         
         const parsedData = Papa.parse(text, {
           delimiter: ";",
@@ -135,14 +143,31 @@ const PM25Dashboard = () => {
         setMonthlyStats(monthlyStats);
       } catch (error) {
         console.error('Errore nel caricamento dei dati:', error);
+        setError(error);
       }
     };
     
     loadData();
   }, []);
 
+  const [error, setError] = useState(null);
+
+  if (error) {
+    return (
+      <div className="p-4 bg-red-50 text-red-700 rounded-lg">
+        <h2 className="font-bold">Errore nel caricamento dei dati:</h2>
+        <p>{error.toString()}</p>
+      </div>
+    );
+  }
+
   if (!stats) {
-    return <div className="p-4">Caricamento dati in corso...</div>;
+    return (
+      <div className="p-4 bg-blue-50 text-blue-700 rounded-lg">
+        <h2 className="font-bold">Caricamento dati in corso...</h2>
+        <p>Attendere il completamento del caricamento...</p>
+      </div>
+    );
   }
 
   return (
