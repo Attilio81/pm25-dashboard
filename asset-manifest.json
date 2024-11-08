@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/pm25-dashboard/static/css/main.3a247c14.css",
+    "main.js": "/pm25-dashboard/static/js/main.6d153cf2.js",
+    "index.html": "/pm25-dashboard/index.html",
+    "main.3a247c14.css.map": "/pm25-dashboard/static/css/main.3a247c14.css.map",
+    "main.6d153cf2.js.map": "/pm25-dashboard/static/js/main.6d153cf2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a247c14.css",
+    "static/js/main.6d153cf2.js"
+  ]
+}
